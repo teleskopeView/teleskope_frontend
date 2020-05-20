@@ -13,4 +13,4 @@ jobs:
           username: efrat19
           password: ${{ secrets.EFRAT19_DOCKER_PASSWORD }}
           tags: "latest,amd64-${{ github.sha }}"
-          context: frontend
+
