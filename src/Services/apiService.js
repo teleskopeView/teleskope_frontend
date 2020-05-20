@@ -3,13 +3,14 @@ import axios from 'axios'
 export default class ApiService {
     
     constructor(){
-        this.apiBaseURL = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000' 
+//         this.apiBaseURL = process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000' 
         this.axios = axios.create({
-            baseURL: this.apiBaseURL,
+//             baseURL: this.apiBaseURL,
             /* other custom settings */
         });
         this.webSocket = null;
-        this.wsEndpoint = process.env.VUE_APP_WS_ENDPOINT || 'ws://localhost:3000/ws';
+//         this.wsEndpoint = process.env.VUE_APP_WS_ENDPOINT || 'ws://localhost:3000/ws';
+        this.wsEndpoint = `ws://${window.location.host}/ws`
     }
 
     async getAPI(route) {
