@@ -1,0 +1,12 @@
+name: Publish Stable Release
+on: [release]
+jobs:
+  push-manifest:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: push manifest
+        uses: docker-practice/actions-setup-docker@master
+      - run: |
+          docker manifest create efrat19/teleskope-frontend:stable efrat19/teleskope-frontend:amd64-${{ github.sha }}
+          docker login -u efrat19 --password ${{ secrets.EFRAT19_DOCKER_PASSWORD }}
+          docker manifest push efrat19/teleskope-frontend:stable
