@@ -7,18 +7,23 @@ module.exports = {
     devServer: {
         disableHostCheck: true,
         proxy: {
-            '/dep/*': {
+            '/dep': {
                 target:  'http://localhost:3000',
                 secure: false,
             },
-            '/list/*': {
+            '/list': {
                 target:  'http://localhost:3000',
                 secure: false,
             },
-            // '/ws*': {
-            //     target:  'http://localhost:3000',
-            //     secure: false,
-            // },
+            '/ns': {
+                target:  'http://localhost:3000',
+                secure: false,
+            },
+            '/ws': {
+                target:  'ws://localhost:3000',
+                secure: false,
+                ws: true
+            },
         }
     },
 }

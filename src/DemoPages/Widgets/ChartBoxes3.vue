@@ -42,21 +42,16 @@ import doughnut from '../Charts/Chartjs/Doughnut'
             deployments: {},
         }),
         async beforeMount() {
-            this.apiService.connectToWebSocket(this.onmessage);
-            const deploymentsList = await this.apiService.listDeploymentsAt(this.$route.params.namespace)
-            deploymentsList.forEach(dep => {
-                this.deployments[dep] = {
-                      exist: 1,
-                      toBeCreated: 0,
-                }
-            })
-            this.subheading = `${Object.keys(this.deployments).length || 0 } Deployments:`
+            await this.createDeploymentsFeed()
+            this.subheading = `${Object.keys(this.deployments).length || 0 } Deployments:`;
+            await this.createChartsFeed()
+            this.apiService.connectToWebSocket(this.upadteFeed);
         },
         beforeDestroyed() {
             this.apiService.disconnectFromWebSocket();
       },
         methods: {
-            onmessage(msg) {
+            upadteFeed(msg) {
                 if(msg.Namespace === this.$route.params.namespace && this.deployments[msg.Name]) {
                     const newChartvalues = {
                         exist: msg.ReplicaCurrent,
@@ -65,6 +60,21 @@ import doughnut from '../Charts/Chartjs/Doughnut'
                     this.deployments[msg.Name] = newChartvalues;
                     this.$forceUpdate()
                 }
+            },
+            async createDeploymentsFeed() {
+                const deploymentsList = await this.apiService.listDeploymentsAt(this.$route.params.namespace)
+                deploymentsList.forEach(dep => {
+                    this.deployments[dep] = {
+                        exist: 0,
+                        toBeCreated: 1,
+                    }
+                })
+            },
+            async createChartsFeed() {
+                Object.keys(this.deployments).forEach(async dep => {
+                    const depDescription = await this.apiService.describeDeployment(this.$route.params.namespace,dep)
+                    this.upadteFeed(depDescription)
+                })
             }
         }
     }
