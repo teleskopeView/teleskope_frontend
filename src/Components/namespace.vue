@@ -24,10 +24,10 @@
 
 <script>
 
-    import PageTitle from "../../Layout/Components/PageTitle.vue";
-    import ApiService from '../../Services/apiService'
+    import PageTitle from "../Layout/Components/PageTitle.vue";
+    import ApiService from '../Services/apiService'
     
-import doughnut from '../Charts/Chartjs/Doughnut'
+import doughnut from '../DemoPages/Charts/Chartjs/Doughnut'
 
     export default {
         components: {

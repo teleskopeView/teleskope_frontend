@@ -820,13 +820,13 @@
 
 <script>
 
-    import PageTitle from "../../Layout/Components/PageTitle.vue";
+    import PageTitle from "../Layout/Components/PageTitle.vue";
     import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 
-    import chart1 from './Analytics/chart1';
-    import chart2 from './Analytics/chart2';
-    import chart3 from './Analytics/chart3';
-    import ApiService from '../../Services/apiService'
+    import chart1 from '../DemoPages/Dashboards/Analytics/chart1';
+    import chart2 from '../DemoPages/Dashboards/Analytics/chart2';
+    import chart3 from '../DemoPages/Dashboards/Analytics/chart3';
+    import ApiService from '../Services/apiService'
 
     import {library} from '@fortawesome/fontawesome-svg-core'
     import {

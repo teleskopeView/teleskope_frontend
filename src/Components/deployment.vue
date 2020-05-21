@@ -77,30 +77,30 @@
 
 <script>
 
-  import PageTitle from "../../Layout/Components/PageTitle.vue";
+  import PageTitle from "../Layout/Components/PageTitle.vue";
 
-  import doughnut from './Chartjs/Doughnut'
-  import radar from './Chartjs/Radar'
-  import polar from './Chartjs/Polar'
-  import pie from './Chartjs/Pie'
-  import lineeg from './Chartjs/Line'
-  import areaeg from './Chartjs/Area'
-  import bar from './Chartjs/Bar'
-  import barhoriz from './Chartjs/BarHoriz'
-  import ApiService from '../../Services/apiService'
+  import doughnut from '../DemoPages/Charts/Chartjs/Doughnut'
+  // import radar from '../DemoPages/Chartjs/Radar'
+  // import polar from '../DemoPages/Chartjs/Polar'
+  // import pie from '../DemoPages/Chartjs/Pie'
+  // import lineeg from '../DemoPages/Chartjs/Line'
+  // import areaeg from '../DemoPages/Chartjs/Area'
+  // import bar from '../DemoPages/Chartjs/Bar'
+  // import barhoriz from '../DemoPages/Chartjs/BarHoriz'
+  import ApiService from '../Services/apiService'
 
   export default {
     components: {
       PageTitle,
 
       doughnut,
-      radar,
-      polar,
-      pie,
-      lineeg,
-      areaeg,
-      bar,
-      barhoriz,
+      // radar,
+      // polar,
+      // pie,
+      // lineeg,
+      // areaeg,
+      // bar,
+      // barhoriz,
 
     },
     data: () => ({
