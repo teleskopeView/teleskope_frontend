@@ -25,6 +25,9 @@
               </div>
               <div class="widget-content-right">
                 <doughnut :chartValues="chartValues" style="width:50px; height:50px"></doughnut>
+                <div class="widget-heading text-center">
+                  <span>{{ chartValues.exist }} / {{ parseInt(chartValues.exist) + parseInt(chartValues.toBeCreated) }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -47,8 +50,8 @@ export default {
   },
   data: () => ({
     apiService: new ApiService(),
-    heading: '',
-    subheading: '',
+    heading: "",
+    subheading: "",
     icon: "pe-7s-helm icon-gradient bg-plum-plate",
     deployments: {}
   }),
