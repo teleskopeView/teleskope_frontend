@@ -133,10 +133,10 @@ export default {
       return container && container.Image.split(":")[1];
     },
     getAge(container) {
-      return "2m31s";
+      return container && container.Age || 'Not Available';
     },
     getSubheading(container) {
-      return "Current State: success";
+      return container && container.Status || 'Unknown Status';
     },
     getChartValues(msg) {
       return (
