@@ -43,7 +43,7 @@
               </div>
               <div class="widget-content-right">
                 <div class="widget-numbers text-success">
-                  <span>2m31s</span>
+                  <span>{{ age }}</span>
                 </div>
               </div>
             </div>
