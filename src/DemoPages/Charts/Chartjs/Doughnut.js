@@ -14,13 +14,19 @@ export default {
     }
   },
   methods: {
+    getColor(toBeCreated) {
+      const warn = '#ef869e';
+      const ok = '#8dace7';
+      return toBeCreated ? warn : ok;
+    },
 render(chartValues) {
   this.renderChart({
     labels: Object.keys(chartValues),
     datasets: [{
       data: Object.values(chartValues),
       backgroundColor: [
-        '#8dace7',
+        // '#8dace7',
+        this.getColor(chartValues.toBeCreated),
         '#eeeeee',
         // '#ef869e'
       ],

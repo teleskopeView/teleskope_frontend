@@ -23,7 +23,7 @@
                   <span>{{ deployment }}</span>
                 </div>
                 <div class="widget-subheading">
-                  <span>{{ desc.image }}</span>
+                  <span>{{ desc.imageAndTag }}</span>
                 </div>
               </div>
               <div class="widget-content-right">
@@ -79,8 +79,7 @@ export default {
           toBeCreated: Math.max(msg.ReplicaDesired - msg.ReplicaCurrent, 0)
         };
         this.deployments[msg.Name].chartValues = newChartvalues;
-        const master = this.getMasterContainer(msg);
-        this.deployments[msg.Name].image = this.getImage(master) + this.getTag(master) || 'Image Not Available';
+        this.deployments[msg.Name].imageAndTag = this.getImageAndTag(msg);
         this.$forceUpdate();
       }
     },
@@ -104,10 +103,18 @@ export default {
       );
     },
     getImage(container) {
-      return container && container.Image.split(":")[0];
+        const fullImage = container && container.Image.split(":")[0];
+        const lastPart = fullImage && fullImage.split('/')[1] 
+        return lastPart || fullImage
     },
     getTag(container) {
-      return container && container.Image.split(":")[1];
+        const tag = container && container.Image.split(":")[1] || ''
+        const prefix = tag.length > 6 ? 'xxxxx' : '';
+        return prefix + tag.slice(-6);
+    },
+    getImageAndTag(msg) {
+        const master = this.getMasterContainer(msg);
+        return this.getImage(master) && `${this.getImage(master)}:${this.getTag(master)}` || 'Image Not Avaliabe'
     },
     async createChartsFeed() {
       Object.keys(this.deployments).forEach(async dep => {
