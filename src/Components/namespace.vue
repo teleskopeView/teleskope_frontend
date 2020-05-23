@@ -9,7 +9,7 @@
     <div class="row mt-4">
       <div
         class="col-lg-6 col-xl-6"
-        v-for="(chartValues,deployment,index) in deployments"
+        v-for="(desc,deployment,index) in deployments"
         :key="index"
       >
         <router-link
@@ -22,11 +22,14 @@
                 <div class="widget-superheading">
                   <span>{{ deployment }}</span>
                 </div>
+                <div class="widget-subheading">
+                  <span>{{ desc.image }}</span>
+                </div>
               </div>
               <div class="widget-content-right">
-                <doughnut :chartValues="chartValues" style="width:50px; height:50px"></doughnut>
+                <doughnut :chartValues="desc.chartValues" style="width:50px; height:50px"></doughnut>
                 <div class="widget-heading text-center">
-                  <span>{{ chartValues.exist }} / {{ parseInt(chartValues.exist) + parseInt(chartValues.toBeCreated) }}</span>
+                  <span>{{ desc.chartValues.exist }} / {{ parseInt(desc.chartValues.exist) + parseInt(desc.chartValues.toBeCreated) }}</span>
                 </div>
               </div>
             </div>
@@ -75,7 +78,9 @@ export default {
           exist: msg.ReplicaCurrent,
           toBeCreated: Math.max(msg.ReplicaDesired - msg.ReplicaCurrent, 0)
         };
-        this.deployments[msg.Name] = newChartvalues;
+        this.deployments[msg.Name].chartValues = newChartvalues;
+        const master = this.getMasterContainer(msg);
+        this.deployments[msg.Name].image = this.getImage(master) + this.getTag(master) || 'Image Not Available';
         this.$forceUpdate();
       }
     },
@@ -84,11 +89,25 @@ export default {
         this.$route.params.namespace
       );
       deploymentsList.forEach(dep => {
-        this.deployments[dep] = {
+          this.deployments[dep] = {};
+        this.deployments[dep].chartValues = {
           exist: 0,
           toBeCreated: 1
         };
       });
+    },
+    getMasterContainer(msg) {
+      return (
+        msg &&
+        msg.Containers &&
+        msg.Containers.find(container => container.Name == "master")
+      );
+    },
+    getImage(container) {
+      return container && container.Image.split(":")[0];
+    },
+    getTag(container) {
+      return container && container.Image.split(":")[1];
     },
     async createChartsFeed() {
       Object.keys(this.deployments).forEach(async dep => {
