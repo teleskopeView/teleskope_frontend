@@ -99,7 +99,7 @@ export default {
       return (
         msg &&
         msg.Containers &&
-        msg.Containers.find(container => container.Name == "master")
+        msg.Containers.find(container => container.Name == "master") || msg.Containers[0]
       );
     },
     getImage(container) {
