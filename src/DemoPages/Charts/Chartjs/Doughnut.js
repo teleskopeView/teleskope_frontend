@@ -16,7 +16,7 @@ export default {
   methods: {
     getColor(toBeCreated) {
       const warn = '#ef869e';
-      const ok = '#8dace7';
+      const ok = document.cookie.includes('green=') ? '#4dd6a7' : '#8dace7';
       return toBeCreated ? warn : ok;
     },
 render(chartValues) {
