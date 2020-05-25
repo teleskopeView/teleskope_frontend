@@ -132,8 +132,8 @@ export default {
     getTag(container) {
       return container && container.Image.split(":")[1];
     },
-    getAge(container) {
-      return container && container.Age || 'Not Available';
+    getAge(msg) {
+      return msg && msg.Age || 'Not Available';
     },
     getSubheading(container) {
       return container && container.Status || 'Unknown Status';
@@ -176,7 +176,7 @@ export default {
       const container = this.getMasterContainer(message);
       this.image = this.getImage(container);
       this.tag = this.getTag(container);
-      this.age = this.getAge(container);
+      this.age = this.getAge(message);
       this.subheading = this.getSubheading(container);
       this.envVars = this.getEnvVars(container);
     },
