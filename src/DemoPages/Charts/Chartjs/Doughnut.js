@@ -16,7 +16,7 @@ export default {
   methods: {
     getColor(toBeCreated) {
       const warn = '#ef869e';
-      const ok = document.cookie.includes('green=') ? '#4dd6a7' : '#8dace7';
+      const ok = '#4dd6a7';
       return toBeCreated ? warn : ok;
     },
 render(chartValues) {
@@ -31,9 +31,9 @@ render(chartValues) {
         // '#ef869e'
       ],
       hoverBackgroundColor: [
-        '#7097e1',
+        '#4dd6a7',
+        // '#7097e1',
         '#eeeeee',
-        // '#4dd6a7',
         // '#eb6886'
       ]
     }]
