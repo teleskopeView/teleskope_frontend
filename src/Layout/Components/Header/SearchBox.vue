@@ -23,9 +23,12 @@ import { eventBus } from '../../../EventBus'
                 eventBus.$emit('search', evt.target.value);
             }
         },
+        mounted () {
+            setTimeout(()=>this.searchOpen = true,4000)
+        },
         watch:{
             $route (to, from){
-                this.searchOpen = to.startsWith('namespaces')
+                this.searchOpen = to.name == 'home' 
             }
         } 
     }
