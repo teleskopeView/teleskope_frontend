@@ -2,7 +2,7 @@
     <div>
         <div class="search-wrapper" v-bind:class="{ active: searchOpen }">
             <div class="input-holder">
-                <input type="text" class="search-input" placeholder="Type to search" @keyup="onChange"/>
+                <input type="text" class="search-input" placeholder="Type to search" @keyup="onKeyup"/>
                 <button class="search-icon" v-on:click="searchOpen = !searchOpen"><span/></button>
             </div>
             <button class="close" v-on:click="searchOpen = !searchOpen"/>
@@ -19,10 +19,15 @@ import { eventBus } from '../../../EventBus'
             }
         },
         methods: {
-            onChange(evt) {
+            onKeyup(evt) {
                 eventBus.$emit('search', evt.target.value);
             }
-        }
+        },
+        watch:{
+            $route (to, from){
+                this.searchOpen = to.startsWith('namespaces')
+            }
+        } 
     }
 </script>
 
