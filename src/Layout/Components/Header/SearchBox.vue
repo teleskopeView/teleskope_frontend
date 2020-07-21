@@ -28,7 +28,7 @@ import { eventBus } from '../../../EventBus'
         },
         watch:{
             $route (to, from){
-                this.searchOpen = to.name == 'home' 
+                this.searchOpen = to.name == 'home' || to.name == 'deployment'
             }
         } 
     }

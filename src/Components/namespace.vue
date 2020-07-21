@@ -9,7 +9,7 @@
     <div class="row mt-4">
       <div
         class="col-lg-6 col-xl-6"
-        v-for="(desc,deployment,index) in deployments"
+        v-for="(desc,deployment,index) in filteredDeployments"
         :key="index"
       >
         <router-link
@@ -43,6 +43,7 @@
 <script>
 import PageTitle from "../Layout/Components/PageTitle.vue";
 import ApiService from "../Services/apiService";
+import { eventBus } from '../EventBus'
 
 import doughnut from "../DemoPages/Charts/Chartjs/Doughnut";
 
@@ -56,9 +57,11 @@ export default {
     heading: "",
     subheading: "",
     icon: "pe-7s-helm icon-gradient bg-plum-plate",
-    deployments: {}
+    deployments: {},
+    filteredDeployments: {}
   }),
   async beforeMount() {
+    eventBus.$on('search',this.onSearch)
     await this.createDeploymentsFeed();
     this.subheading = `${Object.keys(this.deployments).length ||
       0} Deployments:`;
@@ -83,6 +86,12 @@ export default {
         this.$forceUpdate();
       }
     },
+    onSearch(keyword) {
+      this.filteredDeployments = Object.keys(this.deployments).filter(deployment => deployment.includes(keyword)).reduce((obj, key) => {
+    obj[key] = this.deployments[key];
+    return obj;
+  }, {});
+    },
     async createDeploymentsFeed() {
       const deploymentsList = await this.apiService.listDeploymentsAt(
         this.$route.params.namespace
@@ -94,6 +103,7 @@ export default {
           toBeCreated: 1
         };
       });
+      this.filteredDeployments = this.deployments
     },
     getMasterContainer(msg) {
       return (
