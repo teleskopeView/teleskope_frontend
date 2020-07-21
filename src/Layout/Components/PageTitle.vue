@@ -17,6 +17,12 @@
                 <button type="button" class="btn-shadow mr-3 btn btn-dark" @click="reloadPage()">
                     <font-awesome-icon icon="redo"/>
                 </button>
+                <button type="button" class="btn-shadow mr-3 btn btn-light" >
+                        <b-dropdown toggle-class="p-0 mr-2" menu-class="dropdown-menu-lg" variant="link" right>
+                            <button type="button" tabindex="0" class="dropdown-item">Menus</button>
+                        </b-dropdown>
+                    Change Container
+                </button>
                  <router-link :to="`/namespaces/${$route.params.namespace}`" style="text-decoration:none; color:inherit;" v-if="$route.name == 'deployment'">
                 <button type="button" class="btn-shadow d-inline-flex align-items-center btn btn-success">
                     <font-awesome-icon class="mr-2" icon="angle-left"/>
@@ -26,15 +32,43 @@
             </div>
         </div>
     </div>
+    
 </template>
 
 <script>
+    import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+    // import {
+    //     faAngleDown,
+    //     faCalendarAlt,
+    //     faTrashAlt,
+    //     faCheck,
+    //     faFileAlt,
+    //     faCloudDownloadAlt,
+    //     faFileExcel,
+    //     faFilePdf,
+    //     faFileArchive,
+    //     faEllipsisH,
+    // } from '@fortawesome/free-solid-svg-icons'
+
+    // library.add(
+    //     ,
+    //     faCalendarAlt,
+    //     faTrashAlt,
+    //     faCheck,
+    //     faFileAlt,
+    //     faCloudDownloadAlt,
+    //     faFileExcel,
+    //     faFilePdf,
+    //     faFileArchive,
+    //     faEllipsisH,
+    // );
     import {library} from '@fortawesome/fontawesome-svg-core'
     import {
         faStar,
         faPlus,
         faRedo,
-        faAngleLeft
+        faAngleLeft,
+        faAngleDown
     } from '@fortawesome/free-solid-svg-icons'
     import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
@@ -42,7 +76,8 @@
         faStar,
         faPlus,
         faRedo,
-        faAngleLeft
+        faAngleLeft,
+        faAngleDown
     );
 
     export default {

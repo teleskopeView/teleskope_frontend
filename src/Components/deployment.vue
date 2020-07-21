@@ -1,11 +1,6 @@
 <template>
   <div>
-    <router-link
-      :to="`/namespaces/${$route.params.namespace}`"
-      style="text-decoration:none; color:inherit;"
-    >
       <page-title :heading="$route.params.deployment" :subheading="subheading" :icon="icon"></page-title>
-    </router-link>
     <div class="content">
       <b-row>
         <b-col md="6">
@@ -103,7 +98,8 @@ export default {
     fields: ["name", "value"],
     envVars: null,
     podCount: null,
-    icon: "pe-7s-helm icon-gradient bg-amy-crisp"
+    icon: "pe-7s-helm icon-gradient bg-amy-crisp",
+    containerName: 'master'
   }),
   async mounted() {
     this.apiService.connectToWebSocket(this.onmessage);
@@ -159,7 +155,14 @@ export default {
       return (
         msg &&
         msg.Containers &&
-        msg.Containers.find(container => container.Name == "master") || msg.Containers[0]
+        msg.Containers.find(container => container.Name == this.containerName) || msg.Containers[0]
+      );
+    },
+    getContainersList(msg) {
+      return (
+        msg &&
+        msg.Containers &&
+        msg.Containers.map(container => container.Name)
       );
     },
     async setInitialFeed() {
