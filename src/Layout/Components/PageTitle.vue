@@ -17,9 +17,9 @@
                 <button type="button" class="btn-shadow mr-3 btn btn-dark" @click="reloadPage()">
                     <font-awesome-icon icon="redo"/>
                 </button>
-                <button type="button" class="btn-shadow mr-3 btn btn-light" >
+                <button type="button" class="btn-shadow mr-3 btn btn-light" v-if="$route.name == 'deployment'">
                         <b-dropdown toggle-class="p-0 mr-2" menu-class="dropdown-menu-lg" variant="link" right>
-                            <button type="button" tabindex="0" class="dropdown-item">Menus</button>
+                            <button v-for="(container,index) in containers" :key="index" @click="onContainerChange" type="button" :tabindex="index" class="dropdown-item">{{ container }}</button>
                         </b-dropdown>
                     Change Container
                 </button>
@@ -36,32 +36,8 @@
 </template>
 
 <script>
+    import { eventBus } from '../../EventBus'
     import VuePerfectScrollbar from 'vue-perfect-scrollbar'
-    // import {
-    //     faAngleDown,
-    //     faCalendarAlt,
-    //     faTrashAlt,
-    //     faCheck,
-    //     faFileAlt,
-    //     faCloudDownloadAlt,
-    //     faFileExcel,
-    //     faFilePdf,
-    //     faFileArchive,
-    //     faEllipsisH,
-    // } from '@fortawesome/free-solid-svg-icons'
-
-    // library.add(
-    //     ,
-    //     faCalendarAlt,
-    //     faTrashAlt,
-    //     faCheck,
-    //     faFileAlt,
-    //     faCloudDownloadAlt,
-    //     faFileExcel,
-    //     faFilePdf,
-    //     faFileArchive,
-    //     faEllipsisH,
-    // );
     import {library} from '@fortawesome/fontawesome-svg-core'
     import {
         faStar,
@@ -88,11 +64,14 @@
             icon: String,
             heading: String,
             subheading: String,
-
+            containers: Array
         },
         methods: {
             reloadPage() {
                 window.location.reload()
+            },
+            onContainerChange(evt) {
+                eventBus.$emit('containerChanged', evt.target.textContent);
             }
         }
     }

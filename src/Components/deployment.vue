@@ -1,6 +1,6 @@
 <template>
   <div>
-      <page-title :heading="$route.params.deployment" :subheading="subheading" :icon="icon"></page-title>
+      <page-title :heading="$route.params.deployment" :subheading="subheading" :icon="icon" :containers="containersList"></page-title>
     <div class="content">
       <b-row>
         <b-col md="6">
@@ -78,7 +78,7 @@
 
 <script>
 import PageTitle from "../Layout/Components/PageTitle.vue";
-
+import { eventBus } from '../EventBus'
 import doughnut from "../DemoPages/Charts/Chartjs/Doughnut";
 import ApiService from "../Services/apiService";
 
@@ -99,9 +99,12 @@ export default {
     envVars: null,
     podCount: null,
     icon: "pe-7s-helm icon-gradient bg-amy-crisp",
-    containerName: 'master'
+    containerName: 'master',
+    containersList: [],
+    message: {}
   }),
   async mounted() {
+    eventBus.$on('containerChanged',this.onContainerChange)
     this.apiService.connectToWebSocket(this.onmessage);
     await this.setInitialFeed();
   },
@@ -151,11 +154,11 @@ export default {
         }
       );
     },
-    getMasterContainer(msg) {
+    getMasterContainer() {
       return (
-        msg &&
-        msg.Containers &&
-        msg.Containers.find(container => container.Name == this.containerName) || msg.Containers[0]
+        this.message &&
+        this.message.Containers &&
+        this.message.Containers.find(container => container.Name == this.containerName) || this.message.Containers[0]
       );
     },
     getContainersList(msg) {
@@ -174,18 +177,27 @@ export default {
     },
     updateFeed(message) {
       console.log(message);
+      this.message = message;
       this.chartValues = this.getChartValues(message);
       this.podCount = this.getPodCount(message);
+      this.containersList = this.getContainersList(message);
+      this.age = this.getAge(message);
       const container = this.getMasterContainer(message);
+      this.updateContainerAttrs(container)
+    },
+    updateContainerAttrs(container) {
       this.image = this.getImage(container);
       this.tag = this.getTag(container);
-      this.age = this.getAge(message);
       this.subheading = this.getSubheading(container);
       this.envVars = this.getEnvVars(container);
     },
     onmessage(message) {
       message.Name === this.$route.params.deployment &&
         this.updateFeed(message);
+    },
+    onContainerChange(newContainer) {
+      this.containerName = newContainer
+      this.updateContainerAttrs(this.getMasterContainer())
     }
   }
 };
