@@ -17,7 +17,7 @@
                 <button type="button" class="btn-shadow mr-3 btn btn-dark" @click="reloadPage()">
                     <font-awesome-icon icon="redo"/>
                 </button>
-                <button type="button" class="btn-shadow mr-3 btn btn-light" v-if="$route.name == 'deployment'">
+                <button type="button" class="btn-shadow mr-3 btn btn-light" v-if="$route.name == 'deployment' && containers.length > 1">
                         <b-dropdown toggle-class="p-0 mr-2" menu-class="dropdown-menu-lg" variant="link" right>
                             <button v-for="(container,index) in containers" :key="index" @click="onContainerChange" type="button" :tabindex="index" class="dropdown-item">{{ container }}</button>
                         </b-dropdown>
