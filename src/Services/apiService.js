@@ -34,6 +34,11 @@ export default class ApiService {
         return list && list.ID
     }
 
+    async getLog(namespace,deployment,container) {
+        const log = await this.getAPI(`/logs/${namespace}/${deployment}/${container}`)
+        return log
+    }
+
     async describeDeployment(namespace,deployment) {
         return await this.getAPI(`/dep/${namespace}/${deployment}`)
     }

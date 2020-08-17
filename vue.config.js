@@ -15,6 +15,10 @@ module.exports = {
                 target:  'http://localhost:3000',
                 secure: false,
             },
+            '/logs': {
+                target:  'http://localhost:3000',
+                secure: false,
+            },
             '/ns': {
                 target:  'http://localhost:3000',
                 secure: false,
