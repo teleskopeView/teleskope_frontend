@@ -1,7 +1,9 @@
 <template>
     <div class="app-sidebar sidebar-shadow" @mouseover="toggleSidebarHover('add','closed-sidebar-open')" @mouseleave="toggleSidebarHover('remove','closed-sidebar-open')">
         <div class="app-header__logo">
+        <router-link :to="{ name:'home'}" style="text-decoration:none; color:inherit;">
             <div class="logo-src"/>
+        </router-link>
             <div class="header__pane ml-auto">
                 <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" v-bind:class="{ 'is-active' : isOpen }" @click="toggleBodyClass('closed-sidebar')">
                     <span class="hamburger-box">
