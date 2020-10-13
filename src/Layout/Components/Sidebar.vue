@@ -1,7 +1,7 @@
 <template>
     <div class="app-sidebar sidebar-shadow" @mouseover="toggleSidebarHover('add','closed-sidebar-open')" @mouseleave="toggleSidebarHover('remove','closed-sidebar-open')">
         <div class="app-header__logo">
-        <router-link :to="{ name:'home'}" style="text-decoration:none; color:inherit;">
+        <router-link :to="{ name:'home'}" >
             <div class="logo-src"/>
         </router-link>
             <div class="header__pane ml-auto">
