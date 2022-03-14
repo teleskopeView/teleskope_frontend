@@ -10,7 +10,7 @@ export default class ApiService {
         });
         this.webSocket = null;
 //         this.wsEndpoint = process.env.VUE_APP_WS_ENDPOINT || 'ws://localhost:3000/ws';
-        this.wsEndpoint = `wss://${window.location.host}/ws`
+        this.wsEndpoint = `wss://gw-websocket.yad2.io/teleskope/ws`
     }
 
     async getAPI(route) {
