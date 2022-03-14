@@ -1,6 +1,5 @@
 FROM node:lts-alpine as build-stage
 WORKDIR /app
-RUN apk add python
 COPY package*.json ./
 RUN yarn
 COPY . .
